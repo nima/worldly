@@ -4,58 +4,122 @@ import pandas as pd
 import datadotworld as dw
 
 import collections
+import logging
+import locale
+
+
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 
 class Dimension:
     DS = {}
+    logger = logging.getLogger(__name__)
 
     @classmethod
-    def _dataset(cls, uri, table):
+    def dataset(cls, uri, table):
         if uri not in cls.DS:
             cls.DS[uri] = dw.load_dataset(uri, auto_update=True)
 
-        return cls.DS[uri].tables[table]
+        ds = cls.DS[uri]
+        try:
+            return ds.tables[table]
+        except KeyError:
+            cls.logger.error(
+                "No table:`%s` in dataset:`%s`, did you mean one of `%s`?",
+                table, uri, ', '.join(list(wordly.Dimension.DS['samayo/country-names'].tables)),
+            )
+
+        return None
 
 
     @classmethod
     @property
     def countries(cls):
-        return list(map(lambda od: od['country'], cls._dataset('samayo/country-names', 'countries')))
+        return list(map(lambda od: od['country'], cls.dataset('samayo/country-names', 'countries')))
 
-    def __init__(self, name, dataset, table, key, value, unit=None, normalizer=lambda _: _):
+    def __init__(self, name, dataset, key, value, unit=None, normalizer=lambda _: _):
         self._unit = unit
         DimensionCls = collections.namedtuple(name.capitalize(), ["norm", "raw"])
         self._ds = dict(map(
             lambda od: (od[key], DimensionCls(norm=normalizer(od[value]), raw=od[value])),
-            self._dataset(dataset, table) # List of OrderedDict
+            dataset,
         ))
 
         df = pd.DataFrame.from_dict(self._ds, orient='index').drop(['raw'], axis=1).rename(columns=dict(norm=name))
         self._df = df[df.index.isin(Dimension.countries)]
 
 
+    @property
+    def dataframe(self):
+        return self._df
+
     def __call__(self, country=None):
         return self._df if country is None else self._df[self._df.index==country]
 
 
 def df():
-    dimPopulation = Dimension(
-        name='population',
-        dataset='edmadrigal/world-population-json', table='worldpopulation',
-        key='country', value='population', unit='count',
-        normalizer=lambda raw: np.around(np.log(raw), 1),
+    dimensions = []
+
+    dsuri ='edmadrigal/world-population-json'
+    table='worldpopulation'
+    dataset = Dimension.dataset(dsuri, table)
+    if dataset: dimensions.append(
+        Dimension(
+            name='population', dataset=dataset,
+            key='country', value='population', unit='count',
+        )
     )
 
-    dimContinent = Dimension(
-        name='continent',
-        dataset='samayo/country-names', table='country_continent',
-        key='country', value='continent',
+    dsuri = 'samayo/country-names'
+    table = 'country_continent'
+    dataset = Dimension.dataset(dsuri, table)
+    if dataset: dimensions.append(
+        Dimension(
+            name='continent', dataset=dataset,
+            key='country', value='continent',
+        )
     )
 
-    dimCoastline = Dimension(
-        name='coastline',
-        dataset='samayo/country-names', table='country_by_costline',
-        key='country', value='km', unit='kilometers'
+    dsuri = 'samayo/country-names'
+    table = 'country_by_costline'
+    dataset = Dimension.dataset(dsuri, table)
+    if dataset: dimensions.append(
+        Dimension(
+            name='coastline', dataset=dataset,
+            key='country', value='km', unit='kilometers'
+        )
     )
 
-    return pd.concat([dimPopulation(), dimCoastline(), dimContinent()], axis=1)
+    dsuri = 'samayo/country-names'
+    table = 'country_region_in_world'
+    dataset = Dimension.dataset(dsuri, table)
+    if dataset: dimensions.append(
+        Dimension(
+            name='region', dataset=dataset,
+            key='country', value='region',
+        )
+    )
+
+    dsuri = 'samayo/country-names'
+    table = 'country_by_elevation'
+    dataset = Dimension.dataset(dsuri, table)
+    if dataset: dimensions.append(
+        Dimension(
+            name='elevation', dataset=dataset,
+            key='country', value='average', unit='m',
+            normalizer=lambda raw: locale.atof(raw.strip('m')), # 1,234m -> 1234
+        )
+    )
+
+    dsuri = 'samayo/country-names'
+    table = 'country_surface_area'
+    dataset = Dimension.dataset(dsuri, table)
+    if dataset: dimensions.append(
+        Dimension(
+            name='area', dataset=dataset,
+            key='country', value='area', unit='km.km',
+        )
+    )
+
+
+    return pd.concat(map(lambda d: d.dataframe, dimensions), axis=1)
