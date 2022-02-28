@@ -18,15 +18,25 @@ class Dimension:
         return cls.DS[uri].tables[table]
 
 
+    @classmethod
+    @property
+    def countries(cls):
+        return list(map(lambda od: od['country'], cls._dataset('samayo/country-names', 'countries')))
+
     def __init__(self, name, dataset, table, key, value, unit=None, normalizer=lambda _: _):
-        DimensionCls = collections.namedtuple(name.capitalize(), ["norm", "raw", "unit"])
+        self._unit = unit
+        DimensionCls = collections.namedtuple(name.capitalize(), ["norm", "raw"])
         self._ds = dict(map(
-            lambda od: (od[key], DimensionCls(norm=normalizer(od[value]), raw=od[value], unit=unit)),
+            lambda od: (od[key], DimensionCls(norm=normalizer(od[value]), raw=od[value])),
             self._dataset(dataset, table) # List of OrderedDict
         ))
 
+        df = pd.DataFrame.from_dict(self._ds, orient='index').drop(['raw'], axis=1).rename(columns=dict(norm=name))
+        self._df = df[df.index.isin(Dimension.countries)]
+
+
     def __call__(self, country=None):
-        return self._ds if country is None else self._ds.get(country)
+        return self._df if country is None else self._df[self._df.index==country]
 
 
 dimPopulation = Dimension(
@@ -47,3 +57,5 @@ dimCoastline = Dimension(
     dataset='samayo/country-names', table='country_by_costline',
     key='country', value='km', unit='kilometers'
 )
+
+df = pd.concat([dimPopulation(), dimCoastline(), dimContinent()], axis=1)

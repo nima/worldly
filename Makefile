@@ -1,3 +1,6 @@
+ipython: venv; . .venv/bin/activate && PYTHONSTARTUP=repl.py ipython
+.PHONY: ipython
+
 venv: .venv/updated
 requirements.txt: .venv; . .venv/bin/activate && pip3 freeze > $@
 .venv:; virtualenv --python=python3.9.9 $@
@@ -11,6 +14,3 @@ requirements.txt: .venv; . .venv/bin/activate && pip3 freeze > $@
 	. .venv/bin/activate && pip3 freeze > $<
 	touch $@
 .PHONY: update
-
-ipython:; . .venv/bin/activate && PYTHONSTARTUP=repl.py ipython
-.PHONY: ipython
