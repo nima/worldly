@@ -1,4 +1,4 @@
-ipython: venv; . .venv/bin/activate && PYTHONSTARTUP=repl.py ipython
+ipython: venv dw; . .venv/bin/activate && PYTHONSTARTUP=repl.py ipython
 .PHONY: ipython
 
 venv: .venv/updated
@@ -13,4 +13,8 @@ requirements.txt: .venv; . .venv/bin/activate && pip3 freeze > $@
 	. .venv/bin/activate && pip3 install datadotworld
 	. .venv/bin/activate && pip3 freeze > $<
 	touch $@
-.PHONY: update
+.PHONY: venv
+
+dw: ${HOME}/.dw/config
+${HOME}/.dw/config:
+	open https://docs.data.world/en/59261-65580-1--Python.html
