@@ -37,15 +37,19 @@ class Dimension:
     def countries(cls):
         return list(map(lambda od: od['country'], cls.dataset('samayo/country-names', 'countries')))
 
-    def __init__(self, name, dataset, key, value, unit=None, normalizer=lambda _: _):
+    def __init__(self, name, dataset, key, value, numeric=False, unit=None, cleaner=lambda _: _):
         self._unit = unit
         DimensionCls = collections.namedtuple(name.capitalize(), ["norm", "raw"])
         self._ds = dict(map(
-            lambda od: (od[key], DimensionCls(norm=normalizer(od[value]), raw=od[value])),
+            lambda od: (od[key], DimensionCls(norm=cleaner(od[value]), raw=od[value])),
             dataset,
         ))
 
-        df = pd.DataFrame.from_dict(self._ds, orient='index').drop(['raw'], axis=1).rename(columns=dict(norm=name))
+        df = pd.DataFrame.from_dict(self._ds, orient='index')
+        if numeric: df['norm'] = pd.to_numeric(df['norm'])
+        df = df.drop(['raw'], axis=1)
+        df = df.rename(columns=dict(norm=name))
+
         self._df = df[df.index.isin(Dimension.countries)]
 
 
@@ -56,19 +60,11 @@ class Dimension:
     def __call__(self, country=None):
         return self._df if country is None else self._df[self._df.index==country]
 
+def countries():
+    return Dimension.countries
 
 def df():
     dimensions = []
-
-    dsuri ='edmadrigal/world-population-json'
-    table='worldpopulation'
-    dataset = Dimension.dataset(dsuri, table)
-    if dataset: dimensions.append(
-        Dimension(
-            name='population', dataset=dataset,
-            key='country', value='population', unit='count',
-        )
-    )
 
     dsuri = 'samayo/country-names'
     table = 'country_continent'
@@ -77,16 +73,6 @@ def df():
         Dimension(
             name='continent', dataset=dataset,
             key='country', value='continent',
-        )
-    )
-
-    dsuri = 'samayo/country-names'
-    table = 'country_by_costline'
-    dataset = Dimension.dataset(dsuri, table)
-    if dataset: dimensions.append(
-        Dimension(
-            name='coastline', dataset=dataset,
-            key='country', value='km', unit='kilometers'
         )
     )
 
@@ -100,14 +86,37 @@ def df():
         )
     )
 
+    dsuri ='edmadrigal/world-population-json'
+    table='worldpopulation'
+    dataset = Dimension.dataset(dsuri, table)
+    if dataset: dimensions.append(
+        Dimension(
+            name='population', dataset=dataset,
+            key='country', value='population',
+            unit='count', numeric=True,
+        )
+    )
+
+    dsuri = 'samayo/country-names'
+    table = 'country_by_costline'
+    dataset = Dimension.dataset(dsuri, table)
+    if dataset: dimensions.append(
+        Dimension(
+            name='coastline', dataset=dataset,
+            key='country', value='km',
+            unit='km', numeric=True,
+        )
+    )
+
     dsuri = 'samayo/country-names'
     table = 'country_by_elevation'
     dataset = Dimension.dataset(dsuri, table)
     if dataset: dimensions.append(
         Dimension(
             name='elevation', dataset=dataset,
-            key='country', value='average', unit='m',
-            normalizer=lambda raw: locale.atof(raw.strip('m')), # 1,234m -> 1234
+            key='country', value='average',
+            cleaner=lambda raw: locale.atof(raw.strip('m')), # 1,234m -> 1234
+            unit='m', numeric=True,
         )
     )
 
@@ -117,9 +126,11 @@ def df():
     if dataset: dimensions.append(
         Dimension(
             name='area', dataset=dataset,
-            key='country', value='area', unit='km.km',
+            key='country', value='area',
+            unit='km.km', numeric=True,
         )
     )
 
-
     return pd.concat(map(lambda d: d.dataframe, dimensions), axis=1)
+
+
