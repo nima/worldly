@@ -48,8 +48,8 @@ class Dimension:
 
         df.index.name = key
         df = df.astype(dtype={name: dtype})
-        self._df = df[df.index.isin(Dimension.countries)]
-
+        df = df[df.index.isin(Dimension.countries)]
+        self._df = df
 
     @property
     def dataframe(self):

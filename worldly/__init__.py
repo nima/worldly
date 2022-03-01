@@ -1,5 +1,6 @@
 import locale
 import logging
+import random
 
 import numpy as np
 import pandas as pd
@@ -16,13 +17,14 @@ class Quiz:
 
     def __init__(self):
         self._dimensions = {}
+        self._qna = []
 
     def __getitem__(self, name):
         return self._dimensions[name].dataframe[name]
 
     def extend(self, name, dimension):
         """
-        :param name: Name of the new dimension
+        :param name: Name of the new name
         :type name: str
         :param dimension: The Dimension itself
         :type dimension: Dimension
@@ -30,7 +32,7 @@ class Quiz:
         if dimension is not None:
             self._dimensions[name] = dimension
         else:
-            Quiz.logger.warning("Refusing to add empty dimension:`%s`", name)
+            Quiz.logger.warning("Refusing to add empty name:`%s`", name)
 
     def country(self, name):
         try:
@@ -38,9 +40,33 @@ class Quiz:
         except KeyError:
             Quiz.logger.error("No such country:%s; known countries are:%s", name, ", ".join(self.df.index))
 
-    @property
-    def df(self):
-        return pd.concat(map(lambda d: d.dataframe, self._dimensions.values()), axis=1)
+    def df(self, dimension=None):
+        if dimension is None:
+            return pd.concat(map(lambda d: d.dataframe, self._dimensions.values()), axis=1)
+        else:
+            return self._dimensions[dimension].dataframe
+
+    def qna(self, name, filter_out, group_by, question):
+        # select the dimension's dataframe
+        dim = self._dimensions[name]
+        df = dim.dataframe
+
+        # if this is not the first question, limit the selection to the last question's answers
+        if len(self._qna):
+            _, whitelist = self._qna[-1]
+            df = df[df.index.isin(whitelist.index)]
+
+        # filter out garbage
+        remove = df[filter_out(df[name])].index
+        df = df.drop(remove)
+
+        # group by
+        df['_'] = df[name].apply(group_by)
+        group = random.sample(df['_'].to_list(), 1).pop()
+        answers = df[df['_'] == group].drop(columns=['_'])
+
+        # append the generated question and answer
+        self._qna.append((question(name, group), answers))
 
 
 def quiz():
