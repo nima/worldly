@@ -120,5 +120,13 @@ def df():
         unit='count/km/km', numeric=True,
     )
 
+    name = 'government'
+    dataset = Dimension.dataset('samayo/country-names', 'country_government_type')
+    if dataset: dimensions[name] = Dimension(
+        name=name, data=dataset,
+        key='country', value=name,
+    )
+
+
     return pd.concat(map(lambda d: d.dataframe, dimensions.values()), axis=1)
 
