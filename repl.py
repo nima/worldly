@@ -8,4 +8,4 @@ import datadotworld as dw
 import worldly
 
 c = worldly.countries()
-df = worldly.df()
+q = worldly.quiz()
