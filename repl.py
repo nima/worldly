@@ -5,7 +5,7 @@ import scipy as sp
 import pandas as pd
 import datadotworld as dw
 
-import wordly
+import worldly
 
-c = wordly.countries()
-df = wordly.df()
+c = worldly.countries()
+df = worldly.df()
