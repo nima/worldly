@@ -1,7 +1,7 @@
 import logging
 
-import pandas as pd
 import datadotworld as dw
+import pandas as pd
 
 
 class Dimension:
@@ -39,7 +39,6 @@ class Dimension:
 
         return ds
 
-
     @classmethod
     @property
     def countries(cls):
@@ -54,6 +53,8 @@ class Dimension:
         elif datacls == 'dataseries':
             self._ds = {}
             df = pd.DataFrame(index=data.index, data=data, columns=[name])
+        else:
+            raise RuntimeError(f"Invalid parameter value `datacls:{datacls}`")
 
         df.index.name = key
         df = df.astype(dtype={name: dtype})
@@ -69,5 +70,4 @@ class Dimension:
         return self._df
 
     def __call__(self, country=None):
-        return self._df if country is None else self._df[self._df.index==country]
-
+        return self._df if country is None else self._df[self._df.index == country]
