@@ -2,22 +2,33 @@ import locale
 import logging
 import random
 
+import dataclasses
 import numpy as np
 import pandas as pd
+import typing
 
 from worldly.dimensions import Dimension
 
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
+
 def countries():
     return Dimension.countries
+
+
+@dataclasses.dataclass
+class Question:
+    dimension: str
+    question: str
+    group_by: typing.Callable[typing.Any, typing.Any] = lambda _: _
+    filter_out: typing.Callable[typing.Any, bool] = None
+
 
 class Quiz:
     logger = logging.getLogger(__name__)
 
     def __init__(self):
         self._dimensions = {}
-        self._qna = []
 
     def __getitem__(self, name):
         return self._dimensions[name].dataframe[name]
@@ -36,7 +47,7 @@ class Quiz:
 
     def country(self, name):
         try:
-            return self.df.loc[name]
+            return self.df().loc[name]
         except KeyError:
             Quiz.logger.error("No such country:%s; known countries are:%s", name, ", ".join(self.df.index))
 
@@ -46,27 +57,34 @@ class Quiz:
         else:
             return self._dimensions[dimension].dataframe
 
-    def qna(self, name, filter_out, group_by, question):
-        # select the dimension's dataframe
-        dim = self._dimensions[name]
-        df = dim.dataframe
+    def qna(self, questions):
+        qna = []
+        for q in questions:
+            # select the dimension's dataframe
+            dimension = self._dimensions[q.dimension]
+            df = dimension.dataframe.dropna()
 
-        # if this is not the first question, limit the selection to the last question's answers
-        if len(self._qna):
-            _, whitelist = self._qna[-1]
-            df = df[df.index.isin(whitelist.index)]
+            # if this is not the first question, limit the selection to the last question's answers
+            if len(qna):
+                _, whitelist = qna[-1]
+                df = df[df.index.isin(whitelist.index)]
+                if len(df) == 0: continue
 
-        # filter out garbage
-        remove = df[filter_out(df[name])].index
-        df = df.drop(remove)
+            # filter out garbage
+            if q.filter_out is not None:
+                remove = df[q.filter_out(df[q.dimension])].index
+                df = df.drop(remove)
+                if len(df) == 0: continue
 
-        # group by
-        df['_'] = df[name].apply(group_by)
-        group = random.sample(df['_'].to_list(), 1).pop()
-        answers = df[df['_'] == group].drop(columns=['_'])
+            # group by
+            df['_'] = df[q.dimension].apply(q.group_by)
+            group = random.sample(df['_'].to_list(), 1).pop()
+            answers = df[df['_'] == group].drop(columns=['_'])
 
-        # append the generated question and answer
-        self._qna.append((question(name, group), answers))
+            # append the generated question and answer
+            qna.append((q.question(q.dimension, group, dimension.unit), answers))
+
+        return qna
 
 
 def quiz():
@@ -97,12 +115,30 @@ def quiz():
     )
     quiz.extend(name, dimension)
 
+    name = 'area'
+    dataset = Dimension.dataset('samayo/country-names', 'country_surface_area', cleaner=('area', np.int64))
+    dimension = Dimension(
+        name=name, data=dataset,
+        key='country', column=name,
+        unit='kilometers square', dtype=pd.Int64Dtype(),
+    )
+    quiz.extend(name, dimension)
+
+    name = 'density'
+    dimension = Dimension(
+        name=name,
+        key='country', column=name,
+        datacls='dataseries', data=quiz['population']/quiz['area'],
+        unit='people per squared kilometer', dtype=pd.Float32Dtype(),
+    )
+    quiz.extend(name, dimension)
+
     name = 'coastline'
     dataset = Dimension.dataset('samayo/country-names', 'country_by_costline', cleaner=('km', np.int64))
     dimension = Dimension(
         name=name, data=dataset,
         key='country', column='km',
-        unit='km', dtype=pd.Int64Dtype(),
+        unit='kilometers', dtype=pd.Int64Dtype(),
     )
     quiz.extend(name, dimension)
 
@@ -114,25 +150,7 @@ def quiz():
     dimension = Dimension(
         name=name, data=dataset,
         key='country', column='average',
-        unit='m', dtype=pd.Int64Dtype(),
-    )
-    quiz.extend(name, dimension)
-
-    name = 'area'
-    dataset = Dimension.dataset('samayo/country-names', 'country_surface_area', cleaner=('area', np.int64))
-    dimension = Dimension(
-        name=name, data=dataset,
-        key='country', column=name,
-        unit='km.km', dtype=pd.Int64Dtype(),
-    )
-    quiz.extend(name, dimension)
-
-    name = 'density'
-    dimension = Dimension(
-        name=name,
-        key='country', column=name,
-        datacls='dataseries', data=quiz['population']/quiz['area'],
-        unit='count/km/km', dtype=pd.Float32Dtype(),
+        unit='meters', dtype=pd.Int64Dtype(),
     )
     quiz.extend(name, dimension)
 

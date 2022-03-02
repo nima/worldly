@@ -5,28 +5,37 @@ import datadotworld as dw
 
 
 class Dimension:
-    DS = {}
+    COLLECTIONS = {}
+    TABLES = {}
     logger = logging.getLogger(__name__)
 
     @classmethod
     def dataset(cls, uri, table, cleaner=None):
-        if uri not in cls.DS:
-            cls.DS[uri] = dw.load_dataset(uri, auto_update=True)
+        key = f"{uri}.{table}"
+        if key in cls.TABLES:
+            return cls.TABLES[key]
 
-        ds = cls.DS[uri]
-        try:
-            ds = ds.tables[table]
-        except KeyError:
-            ds = None
+        if uri in cls.COLLECTIONS:
+            collection = cls.COLLECTIONS[uri]
+        else:
+            collection = dw.load_dataset(uri, auto_update=True)
+            cls.COLLECTIONS[uri] = collection
+
+        if table not in collection.tables:
             cls.logger.error(
                 "No table:`%s` in dataset:`%s`, did you mean one of `%s`?",
-                table, uri, ', '.join(list(Dimension.DS['samayo/country-names'].tables)),
+                table, uri, ', '.join(list(Dimension.TABLES['samayo/country-names'].tables)),
             )
+            return None
 
-        if ds and cleaner:
+        ds = collection.tables[table]
+
+        if cleaner:
             column, retype = cleaner
             for i, od in ((i, od) for i, od in enumerate(ds) if od[column]):
                 ds[i].update({column: retype(od[column])})
+
+        cls.TABLES[key] = ds
 
         return ds
 
@@ -52,8 +61,13 @@ class Dimension:
         self._df = df
 
     @property
+    def unit(self):
+        return self._unit
+
+    @property
     def dataframe(self):
         return self._df
 
     def __call__(self, country=None):
         return self._df if country is None else self._df[self._df.index==country]
+
