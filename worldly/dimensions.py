@@ -24,7 +24,7 @@ class Dimension:
         if table not in collection.tables:
             cls.logger.error(
                 "No table:`%s` in dataset:`%s`, did you mean one of `%s`?",
-                table, uri, ', '.join(list(Dimension.TABLES['samayo/country-names'].tables)),
+                table, uri, ', '.join(list(collection.tables.keys())),
             )
             return None
 

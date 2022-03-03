@@ -29,6 +29,14 @@ def aQuiz():
     )
     qz.extend(name, dimension)
 
+    name = 'landlocked'
+    dataset = dimensions.Dimension.dataset('samayo/country-names', 'country_landlocked')
+    dimension = dimensions.Dimension(
+        name=name, data=dataset,
+        key='country', column='land_locked',
+    )
+    qz.extend(name, dimension)
+
     name = 'population'
     dataset = dimensions.Dimension.dataset('edmadrigal/world-population-json', 'worldpopulation')
     dimension = dimensions.Dimension(
@@ -151,6 +159,10 @@ def someQuestions():
             question=lambda d, gb, u: f"Situated in the {d} {gb}",
         ),
         questions.Question(
+            dimension='landlocked',
+            question=lambda d, gb, u: f"{'Is' if gb else 'Is not'} a land-locked country",
+        ),
+        questions.Question(
             dimension='government',
             question=lambda d, gb, u: f"Ruled by a {gb} {d}",
         ),
@@ -162,9 +174,9 @@ def someQuestions():
     ]
 
 def aRound():
-    myQuiz = aQuiz()
     myQuestions = someQuestions()
     random.shuffle(myQuestions)
+    myQuiz = aQuiz()
 
     theQuestions, theAnswer = [], None
     for q, a in myQuiz.qna(myQuestions):
