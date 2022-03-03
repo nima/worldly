@@ -9,7 +9,7 @@ requirements.txt: .venv; . .venv/bin/activate && pip3 freeze > $@
 	. .venv/bin/activate && pip3 install --upgrade setuptools
 	. .venv/bin/activate && pip3 install -r $<
 	. .venv/bin/activate && pip3 install ipython autoreload vulture
-	. .venv/bin/activate && pip3 install pandas scipy numpy
+	. .venv/bin/activate && pip3 install pandas scipy numpy python-Levenshtein
 	. .venv/bin/activate && pip3 install datadotworld
 	. .venv/bin/activate && pip3 freeze > $<
 	touch $@

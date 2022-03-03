@@ -3,10 +3,11 @@ import random
 
 import numpy as np
 import pandas as pd
+from Levenshtein import distance as ld
 
-from worldly import quiz
-from worldly import questions
 from worldly import dimensions
+from worldly import questions
+from worldly import quiz
 
 
 def aQuiz():
@@ -93,6 +94,16 @@ def aQuiz():
     )
     qz.extend(name, dimension)
 
+    name = 'gdp'
+    dataset = dimensions.Dimension.dataset('worldbank/gdp-ranking', 'gdp')
+    dimension = dimensions.Dimension(
+        name=name, data=dataset,
+        key='economy', column='us_dollars',
+        unit='millions of UD dollars',
+        dtype=pd.Int64Dtype(),
+    )
+    qz.extend(name, dimension)
+
     return qz
 
 
@@ -143,6 +154,11 @@ def someQuestions():
             dimension='government',
             question=lambda d, gb, u: f"Ruled by a {gb} {d}",
         ),
+        questions.Question(
+            dimension='gdp',
+            question=lambda d, gb, u: f"GDP ranging from {range(gb)}, in {u}",
+            group_by=lambda x: int(np.log10(x)),
+        ),
     ]
 
 def aRound():
@@ -152,7 +168,18 @@ def aRound():
 
     theQuestions, theAnswer = [], None
     for q, a in myQuiz.qna(myQuestions):
-        theQuestions.append(f"Q. {q}? ({len(a.index)} answers)")
+        theQuestions.append(f"{q}? ({len(a.index)} answers)")
         theAnswer = ', '.join(a.index)
 
     return theQuestions, theAnswer
+
+def ask(theQuestions, theAnswer):
+    for aQuestion in theQuestions:
+        anAnswer = input(f"{aQuestion}? ")
+        if anAnswer.lower() == theAnswer.lower():
+            print(f"Correct!")
+            return True
+        else:
+            print(f"Wrong (hint: LD={ld(anAnswer.lower(), theAnswer.lower())})")
+    return False
+
