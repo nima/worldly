@@ -7,23 +7,11 @@ import pandas as pd
 class Quiz:
     logger = logging.getLogger(__name__)
 
-    def __init__(self):
-        self._dimensions = {}
+    def __init__(self, dimensions):
+        self._dimensions = {d.name: d for d in dimensions}
 
-    def __getitem__(self, name):
-        return self._dimensions[name].dataframe[name]
-
-    def extend(self, name, dimension):
-        """
-        :param name: Name of the new name
-        :type name: str
-        :param dimension: The Dimension itself
-        :type dimension: Dimension
-        """
-        if dimension is not None:
-            self._dimensions[name] = dimension
-        else:
-            Quiz.logger.warning("Refusing to add empty name:`%s`", name)
+    def __getattr__(self, name):
+        return self._dimensions[name]
 
     def country(self, name):
         try:
@@ -36,6 +24,9 @@ class Quiz:
             return pd.concat(map(lambda d: d.dataframe, self._dimensions.values()), axis=1)
         else:
             return self._dimensions[dimension].dataframe
+
+    def add_dimension(self, dimension):
+        self._dimensions[dimension.name] = dimension
 
     def qna(self, questions):
         qna = []
@@ -67,3 +58,7 @@ class Quiz:
             qna.append((q.question(q.dimension, group, dimension.unit), answers))
 
         return qna
+
+    @property
+    def dimensions(self):
+        return set(self._dimensions.keys())

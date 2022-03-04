@@ -3,14 +3,13 @@ import logging
 import datadotworld as dw
 import pandas as pd
 
-
-class Dimension:
+class DataDotWorld:
     COLLECTIONS = {}
     TABLES = {}
     logger = logging.getLogger(__name__)
 
     @classmethod
-    def dataset(cls, uri, table, cleaner=None):
+    def table(cls, uri, table, column, cast=lambda _: _, index='country'):
         key = f"{uri}.{table}"
         if key in cls.TABLES:
             return cls.TABLES[key]
@@ -28,38 +27,51 @@ class Dimension:
             )
             return None
 
-        ds = collection.tables[table]
+        print(collection.tables[table][1])
+        raw = filter(lambda kv: kv[column] is not None, collection.tables[table])
 
-        if cleaner:
-            column, retype = cleaner
-            for i, od in ((i, od) for i, od in enumerate(ds) if od[column]):
-                ds[i].update({column: retype(od[column])})
+        try:
+            cls.TABLES[key] = dict(map(lambda od: (od[index], cast(od[column])), raw))
+        except KeyError:
+            print(f"Failed on `{list(raw)[0]}` using column:`{column}`, index:`{index}`")
+            raise
 
-        cls.TABLES[key] = ds
-
-        return ds
+        return cls.TABLES[key]
 
     @classmethod
     @property
     def countries(cls):
-        return list(map(lambda od: od['country'], cls.dataset('samayo/country-names', 'countries')))
+        return cls.table('samayo/country-names', 'countries', 'country').keys()
 
-    def __init__(self, name, data, key, column, datacls='dataset', unit=None, dtype='object'):
-        self._unit = unit
-
-        if datacls == 'dataset':
-            self._ds = dict(map(lambda od: (od[key], od[column]), data))
-            df = pd.DataFrame.from_dict(self._ds, columns=[name], orient='index')
-        elif datacls == 'dataseries':
-            self._ds = {}
+class Dimension:
+    def __init__(self, name, data, unit=None, dtype='object'):
+        if isinstance(data, dict):
+            df = pd.DataFrame.from_dict(data, columns=[name], orient='index')
+        elif isinstance(data, pd.Series):
             df = pd.DataFrame(index=data.index, data=data, columns=[name])
+        elif isinstance(data, pd.DataFrame):
+            df = data
         else:
-            raise RuntimeError(f"Invalid parameter value `datacls:{datacls}`")
+            raise RuntimeError(
+                f"Only know how to handle `dict` and `pd.Series` data types; not `{type(data)}`"
+            )
 
-        df.index.name = key
+        self._unit = unit
+        self._name = name
+
         df = df.astype(dtype={name: dtype})
-        df = df[df.index.isin(Dimension.countries)]
+        df = df[df.index.isin(DataDotWorld.countries)]
         self._df = df
+
+    def __call__(self):
+        return self._df
+
+    def __getitem__(self, country):
+        return self._df[self._df.index == country][self.name].values[0]
+
+    @property
+    def name(self):
+        return self._name
 
     @property
     def unit(self):
@@ -69,5 +81,10 @@ class Dimension:
     def dataframe(self):
         return self._df
 
-    def __call__(self, country=None):
-        return self._df if country is None else self._df[self._df.index == country]
+    @property
+    def series(self):
+        return self._df[self._name]
+
+    @property
+    def countries(self):
+        return set(self._df.index)
