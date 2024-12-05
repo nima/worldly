@@ -5,8 +5,11 @@ import random
 import numpy as np
 import scipy as sp
 import pandas as pd
-from Levenshtein import distance as ld
+#from Levenshtein import distance as ld
 import datadotworld as dw
+
+from operator import mul
+from functools import reduce
 
 import worldly
 

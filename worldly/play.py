@@ -3,7 +3,7 @@ import random
 
 import numpy as np
 import pandas as pd
-from Levenshtein import distance as ld
+#from Levenshtein import distance as ld
 
 from worldly.dimensions import Dimension, DataDotWorld
 from worldly.questions import Question
@@ -156,6 +156,7 @@ def ask(theQuestions, theAnswer):
             print(f"Correct!")
             return True
         else:
-            print(f"Wrong (hint: LD={ld(anAnswer.lower(), theAnswer.lower())})")
+            print(f"Wrong")
+            #print(f"Wrong (hint: LD={ld(anAnswer.lower(), theAnswer.lower())})")
     return False
 

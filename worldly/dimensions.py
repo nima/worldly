@@ -27,7 +27,6 @@ class DataDotWorld:
             )
             return None
 
-        print(collection.tables[table][1])
         raw = filter(lambda kv: kv[column] is not None, collection.tables[table])
 
         try:

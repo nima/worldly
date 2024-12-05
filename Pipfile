@@ -1,0 +1,34 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pipenv = "*"
+langchain = "*"
+langchain-core = "*"
+langchain-openai = "*"
+langchain-ollama = "*"
+langchain-community = "*"
+langchainhub = "*"
+langsmith = "*"
+openai = "*"
+ollama = "*"
+ipython = "*"
+autoreload = "*"
+vulture = "*"
+pandas = "*"
+scipy = "*"
+numpy = "*"
+mpmath = "*"
+python-Levenshtein = "*"
+datadotworld = "*"
+matplotlib = "*"
+
+[dev-packages]
+pytest = "*"
+black = "*"
+pylint = "*"
+
+[requires]
+python_version = "3.12"
