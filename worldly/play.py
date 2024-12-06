@@ -3,75 +3,101 @@ import random
 
 import numpy as np
 import pandas as pd
-#from Levenshtein import distance as ld
+
+# from Levenshtein import distance as ld
 
 from worldly.dimensions import Dimension, DataDotWorld
 from worldly.questions import Question
 from worldly import quiz
 
 
-def aQuiz():
-    qz = quiz.Quiz([
-        Dimension(
-            name='continent',
-            data=DataDotWorld.table('samayo/country-names', 'country_continent', 'continent'),
-        ),
-        Dimension(
-            name='region',
-            data=DataDotWorld.table('samayo/country-names', 'country_region_in_world', 'region'),
-        ),
-        Dimension(
-            name='landlocked',
-            data=DataDotWorld.table('samayo/country-names', 'country_landlocked', 'land_locked'),
-        ),
-        Dimension(
-            name='population',
-            data=DataDotWorld.table('edmadrigal/world-population-json', 'worldpopulation', 'population'),
-            dtype=pd.Int64Dtype(),
-        ),
-        Dimension(
-            name='area',
-            data=DataDotWorld.table('samayo/country-names', 'country_surface_area', 'area', cast=np.int64),
-            unit='kilometers square',
-            dtype=pd.Int64Dtype(),
-        ),
-        Dimension(
-            name='coastline',
-            data=DataDotWorld.table('samayo/country-names', 'country_by_costline', 'km', cast=np.int64),
-            unit='kilometers',
-            dtype=pd.Int64Dtype(),
-        ),
-        Dimension(
-            name='elevation',
-            data=DataDotWorld.table(
-                'samayo/country-names', 'country_by_elevation', 'average',
-                cast=lambda d: np.int64(locale.atof(d.strip('m'))),
+def quiz_bank(hint):
+    qz = quiz.Quiz(
+        [
+            Dimension(
+                name="continent",
+                data=DataDotWorld.table(
+                    "samayo/country-names", "country_continent", "continent"
+                ),
             ),
-            unit='meters',
-            dtype=pd.Int64Dtype(),
-        ),
-        Dimension(
-            name='government',
-            data=DataDotWorld.table('samayo/country-names', 'country_government_type', 'government'),
-        ),
-        Dimension(
-            name='independence',
-            data=DataDotWorld.table('samayo/country-names', 'country_independence_date', 'independence'),
-            dtype=pd.Int64Dtype(),
-        ),
-        Dimension(
-            name='gdp',
-            data=DataDotWorld.table('worldbank/gdp-ranking', 'gdp', 'us_dollars', index='economy'),
-            unit='millions of UD dollars',
-            dtype=pd.Int64Dtype(),
-        ),
-    ])
+            Dimension(
+                name="region",
+                data=DataDotWorld.table(
+                    "samayo/country-names", "country_region_in_world", "region"
+                ),
+            ),
+            Dimension(
+                name="landlocked",
+                data=DataDotWorld.table(
+                    "samayo/country-names", "country_landlocked", "land_locked"
+                ),
+            ),
+            Dimension(
+                name="population",
+                data=DataDotWorld.table(
+                    "edmadrigal/world-population-json", "worldpopulation", "population"
+                ),
+                dtype=pd.Int64Dtype(),
+            ),
+            Dimension(
+                name="area",
+                data=DataDotWorld.table(
+                    "samayo/country-names",
+                    "country_surface_area",
+                    "area",
+                    cast=np.int64,
+                ),
+                unit="kilometers square",
+                dtype=pd.Int64Dtype(),
+            ),
+            Dimension(
+                name="coastline",
+                data=DataDotWorld.table(
+                    "samayo/country-names", "country_by_costline", "km", cast=np.int64
+                ),
+                unit="kilometers",
+                dtype=pd.Int64Dtype(),
+            ),
+            Dimension(
+                name="elevation",
+                data=DataDotWorld.table(
+                    "samayo/country-names",
+                    "country_by_elevation",
+                    "average",
+                    cast=lambda d: np.int64(locale.atof(d.strip("m"))),
+                ),
+                unit="meters",
+                dtype=pd.Int64Dtype(),
+            ),
+            Dimension(
+                name="government",
+                data=DataDotWorld.table(
+                    "samayo/country-names", "country_government_type", "government"
+                ),
+            ),
+            Dimension(
+                name="independence",
+                data=DataDotWorld.table(
+                    "samayo/country-names", "country_independence_date", "independence"
+                ),
+                dtype=pd.Int64Dtype(),
+            ),
+            Dimension(
+                name="gdp",
+                data=DataDotWorld.table(
+                    "worldbank/gdp-ranking", "gdp", "us_dollars", index="economy"
+                ),
+                unit="millions of UD dollars",
+                dtype=pd.Int64Dtype(),
+            ),
+        ]
+    )
 
     qz.add_dimension(
         Dimension(
-            name='density',
+            name="density",
             data=qz.population.series / qz.area.series,
-            unit='people per squared kilometer',
+            unit="people per squared kilometer",
             dtype=pd.Int64Dtype(),
         ),
     )
@@ -85,69 +111,71 @@ def someQuestions():
 
     return [
         Question(
-            dimension='population',
+            dimension="population",
             question=lambda d, gb, u: f"With a {d} between {range(gb)}",
             group_by=lambda x: int(np.log10(x)),
             filter_out=lambda x: x == 0,
         ),
         Question(
-            dimension='area',
+            dimension="area",
             question=lambda d, gb, u: f"With a {d} between {range(gb)} {u}",
             group_by=lambda x: int(np.log10(x)),
             filter_out=lambda x: x == 0,
         ),
         Question(
-            dimension='density',
+            dimension="density",
             question=lambda d, gb, u: f"With a {d} between {range(gb)} {u}",
             group_by=lambda x: int(np.log10(x)),
             filter_out=lambda x: x == 0,
         ),
         Question(
-            dimension='coastline',
+            dimension="coastline",
             question=lambda d, gb, u: f"With {d} stretching between {range(gb)} {u}",
             group_by=lambda x: int(np.log10(x)),
             filter_out=lambda x: x == 0,
         ),
         Question(
-            dimension='elevation',
+            dimension="elevation",
             question=lambda d, gb, u: f"With an average {d} between {range(gb)} {u}",
             group_by=lambda x: int(np.log10(x)),
             filter_out=lambda x: x == 0,
         ),
         Question(
-            dimension='independence',
+            dimension="independence",
             question=lambda d, gb, u: f"Declared {d} in {gb}",
         ),
         Question(
-            dimension='region',
+            dimension="region",
             question=lambda d, gb, u: f"Situated in the {d} {gb}",
         ),
         Question(
-            dimension='landlocked',
+            dimension="landlocked",
             question=lambda d, gb, u: f"{'Is' if gb else 'Is not'} a land-locked country",
         ),
         Question(
-            dimension='government',
+            dimension="government",
             question=lambda d, gb, u: f"Ruled by a {gb} {d}",
         ),
         Question(
-            dimension='gdp',
+            dimension="gdp",
             question=lambda d, gb, u: f"GDP ranging from {range(gb)}, in {u}",
             group_by=lambda x: int(np.log10(x)),
         ),
     ]
 
+
 def aRound():
     myQuestions = someQuestions()
     random.shuffle(myQuestions)
-    myQuiz = aQuiz()
+    myQuiz = quiz_bank()
 
     theQuestions, theAnswer = [], None
     for q, a in myQuiz.qna(myQuestions):
         theQuestions.append(f"{q}? ({len(a.index)} answers)")
-        theAnswer = ', '.join(a.index)
+        theAnswer = ", ".join(a.index)
 
     return theQuestions, theAnswer
+
 
 def ask(theQuestions, theAnswer):
     for aQuestion in theQuestions:
@@ -157,6 +185,5 @@ def ask(theQuestions, theAnswer):
             return True
         else:
             print(f"Wrong")
-            #print(f"Wrong (hint: LD={ld(anAnswer.lower(), theAnswer.lower())})")
+            # print(f"Wrong (hint: LD={ld(anAnswer.lower(), theAnswer.lower())})")
     return False
-

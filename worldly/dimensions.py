@@ -3,13 +3,14 @@ import logging
 import datadotworld as dw
 import pandas as pd
 
+
 class DataDotWorld:
     COLLECTIONS = {}
     TABLES = {}
     logger = logging.getLogger(__name__)
 
     @classmethod
-    def table(cls, uri, table, column, cast=lambda _: _, index='country'):
+    def table(cls, uri, table, column, cast=lambda _: _, index="country"):
         key = f"{uri}.{table}"
         if key in cls.TABLES:
             return cls.TABLES[key]
@@ -23,7 +24,9 @@ class DataDotWorld:
         if table not in collection.tables:
             cls.logger.error(
                 "No table:`%s` in dataset:`%s`, did you mean one of `%s`?",
-                table, uri, ', '.join(list(collection.tables.keys())),
+                table,
+                uri,
+                ", ".join(list(collection.tables.keys())),
             )
             return None
 
@@ -32,20 +35,22 @@ class DataDotWorld:
         try:
             cls.TABLES[key] = dict(map(lambda od: (od[index], cast(od[column])), raw))
         except KeyError:
-            print(f"Failed on `{list(raw)[0]}` using column:`{column}`, index:`{index}`")
+            print(
+                f"Failed on `{list(raw)[0]}` using column:`{column}`, index:`{index}`"
+            )
             raise
 
         return cls.TABLES[key]
 
     @classmethod
-    @property
     def countries(cls):
-        return cls.table('samayo/country-names', 'countries', 'country').keys()
+        return cls.table("samayo/country-names", "countries", "country").keys()
+
 
 class Dimension:
-    def __init__(self, name, data, unit=None, dtype='object'):
+    def __init__(self, name, data, unit=None, dtype="object"):
         if isinstance(data, dict):
-            df = pd.DataFrame.from_dict(data, columns=[name], orient='index')
+            df = pd.DataFrame.from_dict(data, columns=[name], orient="index")
         elif isinstance(data, pd.Series):
             df = pd.DataFrame(index=data.index, data=data, columns=[name])
         elif isinstance(data, pd.DataFrame):
@@ -59,7 +64,7 @@ class Dimension:
         self._name = name
 
         df = df.astype(dtype={name: dtype})
-        df = df[df.index.isin(DataDotWorld.countries)]
+        df = df[df.index.isin(DataDotWorld.countries())]
         self._df = df
 
     def __call__(self):

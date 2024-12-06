@@ -1,27 +1,73 @@
-repl ipython: venv dw; . .venv/bin/activate && PYTHONSTARTUP=repl.py ipython
-.PHONY: ipython
+.DEFAULT_GOAL := status
+.DEFAULT:
+	@echo "Target '$@' is not defined in this Makefile."
 
+serve: ollama.serve
 build: pipenv.build venv
 purge: pipenv.purge
-rebuild: pipenv.purge pipenv.build
+rebuild: pipenv.clean pipenv.build
+status:
+	pipenv check
+	pipenv run safety scan
+	PIPAPI_PYTHON_LOCATION=$(shell pipenv --venv)/bin/python pipenv run pip-audit
+	pipenv run pip --disable-pip-version-check list --outdated
+upgrade: rebuild pipenv.upgrade
+	@#$(foreach pkg,$(shell pip --disable-pip-version-check list --outdated --format=json|jq -r 'map(.name)[]'),pipenv run pip install --upgrade ${pkg};)
+	pipenv update
+	pipenv upgrade
+.PHONY: serve build purge rebuild status upgrade
 
-venv: .venv
-.venv:; ln -sf $(shell pipenv --venv) $@
-.PHONY: venv
+################################################################################
+# Interactive
+repl ipython: venv dw; . .venv/bin/activate && PYTHONSTARTUP=repl.py ipython
+.PHONY: repl ipython
+
+ollama: ollama.run
+.PHONY: ollama
+
+################################################################################
+# Python Pipenv & VirtualEnv
+pipenv.upgrade:
+	@#pipenv run pip install --upgrade pip pipenv
+	$(shell pipenv --venv)/bin/pip install --upgrade pip pipenv
+.PHONY: pipenv.upgrade
 
 pipenv.build: Pipfile.lock
 Pipfile.lock: Pipfile
 	pipenv install --python 3.12
 	pipenv --python 3.12
-	pipenv check
 .PHONY: pipenv.build
 
-pipenv.purge:
+pipenv.clean:
+	rm -f Pipfile.lock  # purge the pipenv lockfile
+.PHONY: pipenv.clean
+
+pipenv.purge: pipenv.clean
 	pipenv --rm          # purge virtualenv entirely
-	rm -rf Pipfile.lock  # purge the pipenv lockfile
 	rm -f .venv          # remove reference to virtualenv
 .PHONY: pipenv.purge
 
+venv: .venv
+.venv:; ln -sf $(shell pipenv --venv) $@
+.PHONY: venv
+
+################################################################################
+# Local LLM Engines
+ollama.pull:
+	ollama pull llama3
+	ollama pull mistral
+.PHONY: ollama.pull
+
+ollama.serve:
+	ollama serve
+.PHONY: ollama.serve
+
+ollama.run:
+	ollama run llama3
+.PHONY: ollama.run
+
+################################################################################
+# Data World
 ifeq (DW_AUTH_TOKEN,)
 dw: ${HOME}/.dw/config
 ${HOME}/.dw/config:

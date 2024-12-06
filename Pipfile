@@ -3,8 +3,16 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[requires]
+python_version = "3.12"
+
 [packages]
+
+# Base
 pipenv = "*"
+ipython = "*"
+
+# LLM
 langchain = "*"
 langchain-core = "*"
 langchain-openai = "*"
@@ -14,21 +22,28 @@ langchainhub = "*"
 langsmith = "*"
 openai = "*"
 ollama = "*"
-ipython = "*"
-autoreload = "*"
-vulture = "*"
+
+# Data Science
+datadotworld = "*"
 pandas = "*"
 scipy = "*"
 numpy = "*"
 mpmath = "*"
 python-Levenshtein = "*"
-datadotworld = "*"
 matplotlib = "*"
 
+# Other
+autoreload = "*"
+vulture = "*"
+setuptools = ">=70.0.0"
+
 [dev-packages]
+
+# IDE
 pytest = "*"
 black = "*"
 pylint = "*"
 
-[requires]
-python_version = "3.12"
+# Security
+safety = "*"
+pip-audit = "*"
