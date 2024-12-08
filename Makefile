@@ -6,10 +6,11 @@ serve: ollama.serve
 build: pipenv.build venv
 purge: pipenv.purge
 rebuild: pipenv.clean pipenv.build
+status: PIPAPI_PYTHON_LOCATION := $(shell pipenv --venv)/bin/python
 status:
 	pipenv check
 	pipenv run safety scan
-	PIPAPI_PYTHON_LOCATION=$(shell pipenv --venv)/bin/python pipenv run pip-audit
+	pipenv run pip-audit
 	pipenv run pip --disable-pip-version-check list --outdated
 upgrade: rebuild pipenv.upgrade
 	@#$(foreach pkg,$(shell pip --disable-pip-version-check list --outdated --format=json|jq -r 'map(.name)[]'),pipenv run pip install --upgrade ${pkg};)

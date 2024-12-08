@@ -10,6 +10,9 @@ class Quiz:
     def __init__(self, dimensions):
         self._dimensions = {d.name: d for d in dimensions}
 
+    def __getitem__(self, name):
+        return self._dimensions[name]
+
     def __getattr__(self, name):
         return self._dimensions[name]
 
@@ -17,13 +20,22 @@ class Quiz:
         try:
             return self.df().loc[name]
         except KeyError:
-            Quiz.logger.error("No such country:%s; known countries are:%s", name, ", ".join(self.df().index))
+            Quiz.logger.error(
+                "No such country:%s; known countries are:%s",
+                name,
+                ", ".join(self.df().index),
+            )
 
     def df(self, dimension=None):
         if dimension is None:
-            return pd.concat(map(lambda d: d.dataframe, self._dimensions.values()), axis=1)
+            return pd.concat(
+                map(lambda d: d.dataframe, self._dimensions.values()), axis=1
+            )
         else:
             return self._dimensions[dimension].dataframe
+
+    def dimension(self, dimension):
+        return self._dimensions[dimension]
 
     def add_dimension(self, dimension):
         self._dimensions[dimension.name] = dimension
@@ -50,9 +62,9 @@ class Quiz:
                     continue
 
             # group by
-            df['_'] = df[q.dimension].apply(q.group_by)
-            group = random.sample(df['_'].to_list(), 1).pop()
-            answers = df[df['_'] == group].drop(columns=['_'])
+            df["_"] = df[q.dimension].apply(q.group_by)
+            group = random.sample(df["_"].to_list(), 1).pop()
+            answers = df[df["_"] == group].drop(columns=["_"])
 
             # append the generated question and answer
             qna.append((q.question(q.dimension, group, dimension.unit), answers))
@@ -62,3 +74,8 @@ class Quiz:
     @property
     def dimensions(self):
         return set(self._dimensions.keys())
+
+    def __str__(self):
+        return ", ".join(
+            [f"{self[d].name}[{self[d]._type}]" for d in sorted(self.dimensions)]
+        )

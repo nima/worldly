@@ -1,25 +1,49 @@
 #!/usr/bin/env python
+import colored_traceback
+
 # from dotenv import load_dotenv
-from langchain_core.prompts import PromptTemplate
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
 from langchain_ollama import ChatOllama
+from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
 import os
 import sys
 import json
 from agents import quizzy
+import ollama
 
-evil = """
-hitler
-stalin
-lenin
-mao
-khamenei
-netanyahu
-ben-gvir
-hitler
-"""
+colored_traceback.add_hook()
+
+
+def recognize_state(text):
+    messages = [
+        {
+            "role": "user",
+            "content": f"""
+                Given the string '{text}', which country, nation state, or city state is it in reference to?
+
+                Your task is match the given text to the officially recognized name.  Three possibilities arise:
+                1. It's clear what the country/state is, unambiguously, for example "China", or "Russia".
+                2. It's ambiguous, for example "Congo"
+                3. It's invalid, for example "Lilliput" or "Blefuscu"
+
+                Don't return a sentence, such as "The country referred to is the People's Republic of China", but
+                just the answe, i.e., "People's Republic of China".  Also use the official name, for example
+                not "Russia", but "The Russian Federation".
+                  
+                In the second case, return a "?", and in the third case return a "!".
+            """,
+        }
+    ]
+    response = ollama.chat(model="mistral", messages=messages)
+    return response["message"]["content"].strip()
+
+    # messages.append({"role": "assistant", "content": response["message"]["content"]})
+    # messages.append({"role": "user", "content": "And of Germany?"})
+
+    # response = ollama.chat(model="mistral", messages=messages)
+    # print(response["message"]["content"])
 
 
 def sparse_dict(d):
@@ -43,6 +67,7 @@ def scrape_linkedin_profile():
 
 
 def main():
+    # print(">>>%s<<<" % recognize_state("iran"))
     # print(os.environ["OPENAI_API_KEY"])
 
     # prompt_template = PromptTemplate(

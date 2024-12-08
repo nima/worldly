@@ -11,7 +11,7 @@ from worldly.questions import Question
 from worldly import quiz
 
 
-def quiz_bank(hint):
+def quiz_bank():
     qz = quiz.Quiz(
         [
             Dimension(
@@ -19,25 +19,28 @@ def quiz_bank(hint):
                 data=DataDotWorld.table(
                     "samayo/country-names", "country_continent", "continent"
                 ),
+                dtype=pd.CategoricalDtype,
             ),
             Dimension(
                 name="region",
                 data=DataDotWorld.table(
                     "samayo/country-names", "country_region_in_world", "region"
                 ),
+                dtype=pd.CategoricalDtype,
             ),
             Dimension(
                 name="landlocked",
                 data=DataDotWorld.table(
                     "samayo/country-names", "country_landlocked", "land_locked"
                 ),
+                dtype=pd.BooleanDtype,
             ),
             Dimension(
                 name="population",
                 data=DataDotWorld.table(
                     "edmadrigal/world-population-json", "worldpopulation", "population"
                 ),
-                dtype=pd.Int64Dtype(),
+                dtype=pd.Int64Dtype,
             ),
             Dimension(
                 name="area",
@@ -47,16 +50,16 @@ def quiz_bank(hint):
                     "area",
                     cast=np.int64,
                 ),
+                dtype=pd.Int64Dtype,
                 unit="kilometers square",
-                dtype=pd.Int64Dtype(),
             ),
             Dimension(
                 name="coastline",
                 data=DataDotWorld.table(
                     "samayo/country-names", "country_by_costline", "km", cast=np.int64
                 ),
+                dtype=pd.Int64Dtype,
                 unit="kilometers",
-                dtype=pd.Int64Dtype(),
             ),
             Dimension(
                 name="elevation",
@@ -66,29 +69,31 @@ def quiz_bank(hint):
                     "average",
                     cast=lambda d: np.int64(locale.atof(d.strip("m"))),
                 ),
+                dtype=pd.Int64Dtype,
                 unit="meters",
-                dtype=pd.Int64Dtype(),
             ),
             Dimension(
                 name="government",
                 data=DataDotWorld.table(
                     "samayo/country-names", "country_government_type", "government"
                 ),
+                dtype=pd.CategoricalDtype,
             ),
             Dimension(
                 name="independence",
                 data=DataDotWorld.table(
                     "samayo/country-names", "country_independence_date", "independence"
                 ),
-                dtype=pd.Int64Dtype(),
+                dtype=pd.Int64Dtype,
+                unit="year",
             ),
             Dimension(
                 name="gdp",
                 data=DataDotWorld.table(
                     "worldbank/gdp-ranking", "gdp", "us_dollars", index="economy"
                 ),
+                dtype=pd.Int64Dtype,
                 unit="millions of UD dollars",
-                dtype=pd.Int64Dtype(),
             ),
         ]
     )
@@ -97,8 +102,8 @@ def quiz_bank(hint):
         Dimension(
             name="density",
             data=qz.population.series / qz.area.series,
+            dtype=pd.Int64Dtype,
             unit="people per squared kilometer",
-            dtype=pd.Int64Dtype(),
         ),
     )
 

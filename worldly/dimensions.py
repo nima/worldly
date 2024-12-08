@@ -2,6 +2,7 @@ import logging
 
 import datadotworld as dw
 import pandas as pd
+import numpy as np
 
 
 class DataDotWorld:
@@ -48,22 +49,25 @@ class DataDotWorld:
 
 
 class Dimension:
-    def __init__(self, name, data, unit=None, dtype="object"):
-        if isinstance(data, dict):
-            df = pd.DataFrame.from_dict(data, columns=[name], orient="index")
+    def __init__(self, name: str, data: dict, dtype: type, unit: str = None) -> None:
+        self._unit = unit
+        self._name = name
+        self._type = dtype()
+        self._order_of_magnitude_fn = np.log10
+
+        if isinstance(data, pd.DataFrame):
+            df = data
         elif isinstance(data, pd.Series):
             df = pd.DataFrame(index=data.index, data=data, columns=[name])
-        elif isinstance(data, pd.DataFrame):
-            df = data
+        elif isinstance(data, dict):
+            df = pd.DataFrame.from_dict(data, columns=[name], orient="index")
         else:
             raise RuntimeError(
                 f"Only know how to handle `dict` and `pd.Series` data types; not `{type(data)}`"
             )
 
-        self._unit = unit
-        self._name = name
-
-        df = df.astype(dtype={name: dtype})
+        df = df.dropna()
+        df = df.astype(dtype={name: self._type})
         df = df[df.index.isin(DataDotWorld.countries())]
         self._df = df
 
@@ -72,6 +76,54 @@ class Dimension:
 
     def __getitem__(self, country):
         return self._df[self._df.index == country][self.name].values[0]
+
+    @property
+    def log10(self):
+        return self._group_by_log(np.log10)
+
+    @property
+    def log2(self):
+        return self._group_by_log(np.log2)
+
+    @property
+    def log(self):
+        return self._group_by_log(np.log)
+
+    def _group_by_log(self, fn):
+        dataframe = self.dataframe[self.name]
+        return (
+            dataframe.reset_index()
+            .assign(log=lambda n: np.round(fn(np.maximum(n[self.name], 1))).astype(int))
+            .groupby("log")
+            .agg({"index": list})
+            .rename(columns={"index": "countries"})
+        )
+
+    def _group_by_category(self):
+        dataframe = self.dataframe[self.name]
+        return (
+            dataframe.reset_index()
+            .groupby(self.name)
+            .agg({"index": list})
+            .rename(columns={"index": "countries"})
+        )
+
+    @property
+    def group(self):
+        # Numeric (e.g., population), or Categorical (e.g., continent)?
+        numeric = isinstance(self._type, pd.Int64Dtype)
+        dataframe = (
+            self._group_by_log(np.log10) if numeric else self._group_by_category()
+        )
+        return (
+            dataframe.assign(l=lambda df: df["countries"].apply(len))
+            .assign(
+                p=lambda df: df["countries"].apply(
+                    lambda l: 100 * len(l) / len(self._df)
+                )
+            )
+            .sort_values(by=["p"])
+        )
 
     @property
     def name(self):
@@ -92,3 +144,7 @@ class Dimension:
     @property
     def countries(self):
         return set(self._df.index)
+
+    @property
+    def effectiveness(self):
+        return self._effectiveness
