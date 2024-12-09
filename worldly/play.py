@@ -15,6 +15,13 @@ def quiz_bank():
     qz = quiz.Quiz(
         [
             Dimension(
+                name="landlocked",
+                data=DataDotWorld.table(
+                    "samayo/country-names", "country_landlocked", "land_locked"
+                ),
+                dtype=pd.BooleanDtype,
+            ),
+            Dimension(
                 name="continent",
                 data=DataDotWorld.table(
                     "samayo/country-names", "country_continent", "continent"
@@ -29,11 +36,11 @@ def quiz_bank():
                 dtype=pd.CategoricalDtype,
             ),
             Dimension(
-                name="landlocked",
+                name="government",
                 data=DataDotWorld.table(
-                    "samayo/country-names", "country_landlocked", "land_locked"
+                    "samayo/country-names", "country_government_type", "government"
                 ),
-                dtype=pd.BooleanDtype,
+                dtype=pd.CategoricalDtype,
             ),
             Dimension(
                 name="population",
@@ -73,13 +80,6 @@ def quiz_bank():
                 unit="meters",
             ),
             Dimension(
-                name="government",
-                data=DataDotWorld.table(
-                    "samayo/country-names", "country_government_type", "government"
-                ),
-                dtype=pd.CategoricalDtype,
-            ),
-            Dimension(
                 name="independence",
                 data=DataDotWorld.table(
                     "samayo/country-names", "country_independence_date", "independence"
@@ -102,8 +102,8 @@ def quiz_bank():
         Dimension(
             name="density",
             data=qz.population.series / qz.area.series,
-            dtype=pd.Int64Dtype,
             unit="people per squared kilometer",
+            dtype=pd.Int64Dtype,
         ),
     )
 

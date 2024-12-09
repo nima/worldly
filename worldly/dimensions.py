@@ -4,6 +4,8 @@ import datadotworld as dw
 import pandas as pd
 import numpy as np
 
+from typing import Callable
+
 
 class DataDotWorld:
     COLLECTIONS = {}
@@ -53,7 +55,6 @@ class Dimension:
         self._unit = unit
         self._name = name
         self._type = dtype()
-        self._order_of_magnitude_fn = np.log10
 
         if isinstance(data, pd.DataFrame):
             df = data
@@ -93,8 +94,14 @@ class Dimension:
         dataframe = self.dataframe[self.name]
         return (
             dataframe.reset_index()
-            .assign(log=lambda n: np.round(fn(np.maximum(n[self.name], 1))).astype(int))
-            .groupby("log")
+            .assign(
+                **{
+                    fn.__name__: lambda n: np.round(
+                        fn(np.maximum(n[self.name], 1))
+                    ).astype(int)
+                }
+            )
+            .groupby(fn.__name__)
             .agg({"index": list})
             .rename(columns={"index": "countries"})
         )
@@ -108,13 +115,11 @@ class Dimension:
             .rename(columns={"index": "countries"})
         )
 
-    @property
-    def group(self):
+    def group(self, fn=np.log):
         # Numeric (e.g., population), or Categorical (e.g., continent)?
         numeric = isinstance(self._type, pd.Int64Dtype)
-        dataframe = (
-            self._group_by_log(np.log10) if numeric else self._group_by_category()
-        )
+        dataframe = self._group_by_log(fn) if numeric else self._group_by_category()
+
         return (
             dataframe.assign(l=lambda df: df["countries"].apply(len))
             .assign(
@@ -122,7 +127,7 @@ class Dimension:
                     lambda l: 100 * len(l) / len(self._df)
                 )
             )
-            .sort_values(by=["p"])
+            .sort_values(by=[fn.__name__ if numeric else "p"])
         )
 
     @property
