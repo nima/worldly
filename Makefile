@@ -20,7 +20,8 @@ upgrade: rebuild pipenv.upgrade
 
 ################################################################################
 # Interactive
-repl ipython: venv dw; . .venv/bin/activate && PYTHONSTARTUP=repl.py ipython
+repl ipython: PYTHONSTARTUP := repl.py
+repl ipython: venv dw; pipenv run ipython
 .PHONY: repl ipython
 
 ollama: ollama.run

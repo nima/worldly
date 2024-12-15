@@ -102,6 +102,9 @@ q.dimensions       # Review the set of dimensions available
 q.area.group       # View the `area` dimension, numerically grouped (by logarithm)
 q.continent.group  # View the `area` dimension, categorically grouped
 
+# Merge dimensions
+pd.merge(q.government.dataframe, q.continent.dataframe, left_index=True, right_index=True, how="inner")
+
 # Play a game
 worldly.play.ask(*worldly.play.aRound())
 

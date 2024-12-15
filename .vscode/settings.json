@@ -1,0 +1,73 @@
+{
+    "workbench.colorTheme": "Fruits Modern",
+    "workbench.colorCustomizations": {
+        "editor.wordHighlightStrongBorder": "#ff411185", 
+        "editor.wordHighlightStrongBackground": "#ff5c116e",
+        "editor.wordHighlightBorder": "#ffc71179",
+        "editor.wordHighlightBackground": "#ffc7116e"
+    },
+    "editor.wrappingStrategy": "advanced",
+    "editor.wordWrapColumn": 120,
+    "editor.autoClosingBrackets": "beforeWhitespace",
+    "vim.textwidth": 120,
+    "[python]": {
+        "editor.rulers": [
+            100,
+            120
+        ],
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?"
+    },
+    "[git-commit]": {"editor.rulers": [50]},
+    "pylint.enabled": true,
+    "pylint.showNotifications": "always",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportUnusedImport": "information",
+        "reportMissingImports": "none"
+    },
+    "python.analysis.typeCheckingMode": "standard",
+    "black-formatter.showNotifications": "onWarning",
+    "black-formatter.args": [
+        "--line-length",
+        "120"
+    ],
+    "pylint.args": [
+        "--rcfile=pylintrc"
+    ],
+    "vim.hlsearch": true,
+    "vim.searchHighlightColor": "#ff0000de",
+    "aws.telemetry": false,
+    "coverage-gutters.showLineCoverage": true,
+    "coverage-gutters.showRulerCoverage": true,
+    "commentAnchors.tags.anchors": {
+        "ANCHOR": { "iconColor": "default", "highlightColor": "#A8C023", "scope": "file" },
+        "STUB": { "iconColor": "purple", "highlightColor": "#BA68C8", "scope": "file" },
+        "NOTE": { "iconColor": "orange", "highlightColor": "#FFB300", "scope": "file" },
+        "TODO": { "iconColor": "blue", "highlightColor": "#3ea8ff", "scope": "workspace" },
+        "BUG": { "iconColor": "red", "highlightColor": "#F44336", "scope": "workspace" },
+        "TEST": { "iconColor": "orange", "highlightColor": "#FFB300", "scope": "workspace" },
+        "DEPRECATE": { "iconColor": "orange", "highlightColor": "#FFB300", "scope": "workspace" },
+        "XXX": { "iconColor": "red", "highlightColor": "#F44336", "scope": "workspace" },
+        "FIXME": { "iconColor": "red", "highlightColor": "#F44336", "scope": "workspace" },
+        "REVIEW": { "iconColor": "green", "highlightColor": "#64DD17", "scope": "workspace" },
+        "PARANOIA": { "iconColor": "blurple", "highlightColor": "#896afc", "scope": "workspace" },
+        "DEBUG": { "iconColor": "teal", "highlightColor": "#00cec9", "scope": "workspace" },
+        "region": { "iconColor": "blurple", "highlightColor": "#896afc", "scope": "workspace" },
+        "endregion": { "iconColor": "blurple", "highlightColor": "#896afc", "scope": "workspace" },
+        "SECTION": { "iconColor": "blurple", "highlightColor": "#896afc", "scope": "workspace", "behavior": "region" },
+        "LINK": { "iconColor": "#2ecc71", "highlightColor": "#2ecc71", "scope": "workspace", "behavior": "link" }
+    },
+    "commentAnchors.showCursor": true,
+    "commentAnchors.tags.separators": [ " [", ": " ],
+    "commentAnchors.tags.endTag": "] ",
+    "projectManager.git.baseFolders": [
+        "/Users/k34446/Development/"
+    ],
+    "workbench.panel.showLabels": false,
+    "workbench.commandPalette.history": 1000,
+    "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?",
+    "coverage-gutters.remotePathResolve": [
+
+    ]
+}

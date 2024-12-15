@@ -1,0 +1,809 @@
+[
+    {
+        "label": "runpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "runpy",
+        "description": "runpy",
+        "detail": "runpy",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "print_function",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "site",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "site",
+        "description": "site",
+        "detail": "site",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "pformat",
+        "importPath": "pprint",
+        "description": "pprint",
+        "isExtraImport": true,
+        "detail": "pprint",
+        "documentation": {}
+    },
+    {
+        "label": "jmespath",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "jmespath",
+        "description": "jmespath",
+        "detail": "jmespath",
+        "documentation": {}
+    },
+    {
+        "label": "exceptions",
+        "importPath": "jmespath",
+        "description": "jmespath",
+        "isExtraImport": true,
+        "detail": "jmespath",
+        "documentation": {}
+    },
+    {
+        "label": "PromptTemplate",
+        "importPath": "langchain_core.prompts",
+        "description": "langchain_core.prompts",
+        "isExtraImport": true,
+        "detail": "langchain_core.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "PromptTemplate",
+        "importPath": "langchain_core.prompts",
+        "description": "langchain_core.prompts",
+        "isExtraImport": true,
+        "detail": "langchain_core.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "PromptTemplate",
+        "importPath": "langchain_core.prompts",
+        "description": "langchain_core.prompts",
+        "isExtraImport": true,
+        "detail": "langchain_core.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "ChatOpenAI",
+        "importPath": "langchain_openai",
+        "description": "langchain_openai",
+        "isExtraImport": true,
+        "detail": "langchain_openai",
+        "documentation": {}
+    },
+    {
+        "label": "ChatOpenAI",
+        "importPath": "langchain_openai",
+        "description": "langchain_openai",
+        "isExtraImport": true,
+        "detail": "langchain_openai",
+        "documentation": {}
+    },
+    {
+        "label": "ChatOpenAI",
+        "importPath": "langchain_openai",
+        "description": "langchain_openai",
+        "isExtraImport": true,
+        "detail": "langchain_openai",
+        "documentation": {}
+    },
+    {
+        "label": "ChatOllama",
+        "importPath": "langchain_ollama",
+        "description": "langchain_ollama",
+        "isExtraImport": true,
+        "detail": "langchain_ollama",
+        "documentation": {}
+    },
+    {
+        "label": "ChatOllama",
+        "importPath": "langchain_ollama",
+        "description": "langchain_ollama",
+        "isExtraImport": true,
+        "detail": "langchain_ollama",
+        "documentation": {}
+    },
+    {
+        "label": "ChatOllama",
+        "importPath": "langchain_ollama",
+        "description": "langchain_ollama",
+        "isExtraImport": true,
+        "detail": "langchain_ollama",
+        "documentation": {}
+    },
+    {
+        "label": "StrOutputParser",
+        "importPath": "langchain_core.output_parsers",
+        "description": "langchain_core.output_parsers",
+        "isExtraImport": true,
+        "detail": "langchain_core.output_parsers",
+        "documentation": {}
+    },
+    {
+        "label": "StrOutputParser",
+        "importPath": "langchain_core.output_parsers",
+        "description": "langchain_core.output_parsers",
+        "isExtraImport": true,
+        "detail": "langchain_core.output_parsers",
+        "documentation": {}
+    },
+    {
+        "label": "StrOutputParser",
+        "importPath": "langchain_core.output_parsers",
+        "description": "langchain_core.output_parsers",
+        "isExtraImport": true,
+        "detail": "langchain_core.output_parsers",
+        "documentation": {}
+    },
+    {
+        "label": "Tool",
+        "importPath": "langchain_core.tools",
+        "description": "langchain_core.tools",
+        "isExtraImport": true,
+        "detail": "langchain_core.tools",
+        "documentation": {}
+    },
+    {
+        "label": "Tool",
+        "importPath": "langchain_core.tools",
+        "description": "langchain_core.tools",
+        "isExtraImport": true,
+        "detail": "langchain_core.tools",
+        "documentation": {}
+    },
+    {
+        "label": "agents",
+        "importPath": "langchain",
+        "description": "langchain",
+        "isExtraImport": true,
+        "detail": "langchain",
+        "documentation": {}
+    },
+    {
+        "label": "hub",
+        "importPath": "langchain",
+        "description": "langchain",
+        "isExtraImport": true,
+        "detail": "langchain",
+        "documentation": {}
+    },
+    {
+        "label": "agents",
+        "importPath": "langchain",
+        "description": "langchain",
+        "isExtraImport": true,
+        "detail": "langchain",
+        "documentation": {}
+    },
+    {
+        "label": "hub",
+        "importPath": "langchain",
+        "description": "langchain",
+        "isExtraImport": true,
+        "detail": "langchain",
+        "documentation": {}
+    },
+    {
+        "label": "agents",
+        "importPath": "langchain",
+        "description": "langchain",
+        "isExtraImport": true,
+        "detail": "langchain",
+        "documentation": {}
+    },
+    {
+        "label": "hub",
+        "importPath": "langchain",
+        "description": "langchain",
+        "isExtraImport": true,
+        "detail": "langchain",
+        "documentation": {}
+    },
+    {
+        "label": "typing",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "typing",
+        "description": "typing",
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Sequence",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Callable",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TavilySearchResults",
+        "importPath": "langchain_community.tools.tavily_search",
+        "description": "langchain_community.tools.tavily_search",
+        "isExtraImport": true,
+        "detail": "langchain_community.tools.tavily_search",
+        "documentation": {}
+    },
+    {
+        "label": "ollama",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "ollama",
+        "description": "ollama",
+        "detail": "ollama",
+        "documentation": {}
+    },
+    {
+        "label": "openai",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "openai",
+        "description": "openai",
+        "detail": "openai",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
+        "label": "datadotworld",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "datadotworld",
+        "description": "datadotworld",
+        "detail": "datadotworld",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "locale",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "locale",
+        "description": "locale",
+        "detail": "locale",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "Dimension",
+        "importPath": "worldly.dimensions",
+        "description": "worldly.dimensions",
+        "isExtraImport": true,
+        "detail": "worldly.dimensions",
+        "documentation": {}
+    },
+    {
+        "label": "DataDotWorld",
+        "importPath": "worldly.dimensions",
+        "description": "worldly.dimensions",
+        "isExtraImport": true,
+        "detail": "worldly.dimensions",
+        "documentation": {}
+    },
+    {
+        "label": "Question",
+        "importPath": "worldly.questions",
+        "description": "worldly.questions",
+        "isExtraImport": true,
+        "detail": "worldly.questions",
+        "documentation": {}
+    },
+    {
+        "label": "worldly",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "worldly",
+        "description": "worldly",
+        "detail": "worldly",
+        "documentation": {}
+    },
+    {
+        "label": "quiz",
+        "importPath": "worldly",
+        "description": "worldly",
+        "isExtraImport": true,
+        "detail": "worldly",
+        "documentation": {}
+    },
+    {
+        "label": "dataclasses",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "importlib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "importlib",
+        "description": "importlib",
+        "detail": "importlib",
+        "documentation": {}
+    },
+    {
+        "label": "autoreload",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "autoreload",
+        "description": "autoreload",
+        "detail": "autoreload",
+        "documentation": {}
+    },
+    {
+        "label": "defaultdict",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "get_ipython",
+        "importPath": "IPython",
+        "description": "IPython",
+        "isExtraImport": true,
+        "detail": "IPython",
+        "documentation": {}
+    },
+    {
+        "label": "get_ipython",
+        "importPath": "IPython",
+        "description": "IPython",
+        "isExtraImport": true,
+        "detail": "IPython",
+        "documentation": {}
+    },
+    {
+        "label": "scipy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "scipy",
+        "description": "scipy",
+        "detail": "scipy",
+        "documentation": {}
+    },
+    {
+        "label": "mul",
+        "importPath": "operator",
+        "description": "operator",
+        "isExtraImport": true,
+        "detail": "operator",
+        "documentation": {}
+    },
+    {
+        "label": "reduce",
+        "importPath": "functools",
+        "description": "functools",
+        "isExtraImport": true,
+        "detail": "functools",
+        "documentation": {}
+    },
+    {
+        "label": "distance",
+        "importPath": "Levenshtein",
+        "description": "Levenshtein",
+        "isExtraImport": true,
+        "detail": "Levenshtein",
+        "documentation": {}
+    },
+    {
+        "label": "quiz_bank",
+        "importPath": "worldly.play",
+        "description": "worldly.play",
+        "isExtraImport": true,
+        "detail": "worldly.play",
+        "documentation": {}
+    },
+    {
+        "label": "colored_traceback",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "colored_traceback",
+        "description": "colored_traceback",
+        "detail": "colored_traceback",
+        "documentation": {}
+    },
+    {
+        "label": "tools.state",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tools.state",
+        "description": "tools.state",
+        "detail": "tools.state",
+        "documentation": {}
+    },
+    {
+        "label": "bin_dir",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "bin_dir = os.path.dirname(abs_file)\nbase = bin_dir[: -len('bin') - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = 'worldly' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.12/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "base",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "base = bin_dir[: -len('bin') - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = 'worldly' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.12/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"PATH\"]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = 'worldly' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.12/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV\"]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = 'worldly' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.12/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV_PROMPT\"]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV_PROMPT\"] = 'worldly' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.12/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "prev_length",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "prev_length = len(sys.path)\nfor lib in '../lib/python3.12/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.path[:]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "sys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.real_prefix",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "sys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.prefix",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "sys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": ".venv.bin.jp",
+        "description": ".venv.bin.jp",
+        "peekOfCode": "def main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument('expression')\n    parser.add_argument('-f', '--filename',\n                        help=('The filename containing the input data.  '\n                              'If a filename is not given then data is '\n                              'read from stdin.'))\n    parser.add_argument('--ast', action='store_true',\n                        help=('Pretty print the AST, do not search the data.'))\n    args = parser.parse_args()",
+        "detail": ".venv.bin.jp",
+        "documentation": {}
+    },
+    {
+        "label": "cmd_doc",
+        "kind": 5,
+        "importPath": ".venv.bin.runxlrd",
+        "description": ".venv.bin.runxlrd",
+        "peekOfCode": "cmd_doc = \"\"\"\nCommands:\n2rows           Print the contents of first and last row in each sheet\n3rows           Print the contents of first, second and last row in each sheet\nbench           Same as \"show\", but doesn't print -- for profiling\nbiff_count[1]   Print a count of each type of BIFF record in the file\nbiff_dump[1]    Print a dump (char and hex) of the BIFF records in the file\nfonts           hdr + print a dump of all font objects\nhdr             Mini-overview of file (no per-sheet information)\nhotshot         Do a hotshot profile run e.g. ... -f1 hotshot bench bigfile*.xls",
+        "detail": ".venv.bin.runxlrd",
+        "documentation": {}
+    },
+    {
+        "label": "options",
+        "kind": 5,
+        "importPath": ".venv.bin.runxlrd",
+        "description": ".venv.bin.runxlrd",
+        "peekOfCode": "options = None\nif __name__ == \"__main__\":\n    import xlrd\n    import sys\n    import time\n    import glob\n    import traceback\n    import gc\n    from xlrd.timemachine import xrange, REPR\n    class LogHandler(object):",
+        "detail": ".venv.bin.runxlrd",
+        "documentation": {}
+    },
+    {
+        "label": "ask",
+        "kind": 2,
+        "importPath": "agents.quizzy",
+        "description": "agents.quizzy",
+        "peekOfCode": "def ask() -> str:\n    prompt_template_fmt = \"\"\"I want to construct a quiz loop, where we ask the user \n    successive questions, and lead the user to guess what country we're thinking of.\n    To do that, I have constructed a set of dimensions, each focused on only one\n    dimension, such as GDP, or if the country is land-locked or not.\n    Here's how it works:\n    1. You select a country that you keep secret\n    2. You then select a random dimension, from the dimensions list that I will be\n    providing to you.\n    3. You use the given dimension to construct a statement which is true for at",
+        "detail": "agents.quizzy",
+        "documentation": {}
+    },
+    {
+        "label": "functions",
+        "kind": 5,
+        "importPath": "tools.state",
+        "description": "tools.state",
+        "peekOfCode": "functions = {\n    \"Ollama:mistral\": lambda msg: _recognize(_mklm_ollama(\"mistral\"), msg),\n    \"OpenAI:gpt-4o-mini\": lambda msg: _recognize(_mklm_openai(\"gpt-4o-mini\"), msg),\n}\nrecognizers = [\n    Tool(\n        name=f\"recognize_state_via_{lm}\",\n        func=func,\n        description=(\n            \"Resolves user-provided text into the official name of a country, \"",
+        "detail": "tools.state",
+        "documentation": {}
+    },
+    {
+        "label": "recognizers",
+        "kind": 5,
+        "importPath": "tools.state",
+        "description": "tools.state",
+        "peekOfCode": "recognizers = [\n    Tool(\n        name=f\"recognize_state_via_{lm}\",\n        func=func,\n        description=(\n            \"Resolves user-provided text into the official name of a country, \"\n            \"state, or region. Returns '?' for ambiguous inputs and '!' for invalid inputs.\"\n        ),\n    )\n    for lm, func in functions.items()",
+        "detail": "tools.state",
+        "documentation": {}
+    },
+    {
+        "label": "sparsify",
+        "kind": 2,
+        "importPath": "utils.utils",
+        "description": "utils.utils",
+        "peekOfCode": "def sparsify(d: Union[dict, list]) -> Union[dict, list]:\n    \"\"\"\n    Recursively remove keys with falsy values from a dictionary or list.\n    \"\"\"\n    if isinstance(d, dict):\n        return {\n            key: sparse for key, value in d.items() if (sparse := sparse_dict(value))\n        }\n    if isinstance(d, list):\n        return [sparse for item in d if (sparse := sparsify(item))]",
+        "detail": "utils.utils",
+        "documentation": {}
+    },
+    {
+        "label": "DataDotWorld",
+        "kind": 6,
+        "importPath": "worldly.dimensions",
+        "description": "worldly.dimensions",
+        "peekOfCode": "class DataDotWorld:\n    COLLECTIONS = {}\n    TABLES = {}\n    logger = logging.getLogger(__name__)\n    @classmethod\n    def table(cls, uri, table, column, cast=lambda _: _, index=\"country\"):\n        key = f\"{uri}.{table}\"\n        if key in cls.TABLES:\n            return cls.TABLES[key]\n        if uri in cls.COLLECTIONS:",
+        "detail": "worldly.dimensions",
+        "documentation": {}
+    },
+    {
+        "label": "Dimension",
+        "kind": 6,
+        "importPath": "worldly.dimensions",
+        "description": "worldly.dimensions",
+        "peekOfCode": "class Dimension:\n    def __init__(self, name: str, data: dict, dtype: type, unit: str = None) -> None:\n        self._unit = unit\n        self._name = name\n        self._type = dtype()\n        if isinstance(data, pd.DataFrame):\n            df = data\n        elif isinstance(data, pd.Series):\n            df = pd.DataFrame(index=data.index, data=data, columns=[name])\n        elif isinstance(data, dict):",
+        "detail": "worldly.dimensions",
+        "documentation": {}
+    },
+    {
+        "label": "quiz_bank",
+        "kind": 2,
+        "importPath": "worldly.play",
+        "description": "worldly.play",
+        "peekOfCode": "def quiz_bank():\n    qz = quiz.Quiz(\n        [\n            Dimension(\n                name=\"landlocked\",\n                data=DataDotWorld.table(\n                    \"samayo/country-names\", \"country_landlocked\", \"land_locked\"\n                ),\n                dtype=pd.BooleanDtype,\n            ),",
+        "detail": "worldly.play",
+        "documentation": {}
+    },
+    {
+        "label": "someQuestions",
+        "kind": 2,
+        "importPath": "worldly.play",
+        "description": "worldly.play",
+        "peekOfCode": "def someQuestions():\n    range = lambda n: f\"{10 ** n:,} and {10 ** (n + 1):,}\"\n    return [\n        Question(\n            dimension=\"population\",\n            question=lambda d, gb, u: f\"With a {d} between {range(gb)}\",\n            group_by=lambda x: int(np.log10(x)),\n            filter_out=lambda x: x == 0,\n        ),\n        Question(",
+        "detail": "worldly.play",
+        "documentation": {}
+    },
+    {
+        "label": "aRound",
+        "kind": 2,
+        "importPath": "worldly.play",
+        "description": "worldly.play",
+        "peekOfCode": "def aRound():\n    myQuestions = someQuestions()\n    random.shuffle(myQuestions)\n    myQuiz = quiz_bank()\n    theQuestions, theAnswer = [], None\n    for q, a in myQuiz.qna(myQuestions):\n        theQuestions.append(f\"{q}? ({len(a.index)} answers)\")\n        theAnswer = \", \".join(a.index)\n    return theQuestions, theAnswer\ndef ask(theQuestions, theAnswer) -> bool:",
+        "detail": "worldly.play",
+        "documentation": {}
+    },
+    {
+        "label": "ask",
+        "kind": 2,
+        "importPath": "worldly.play",
+        "description": "worldly.play",
+        "peekOfCode": "def ask(theQuestions, theAnswer) -> bool:\n    for aQuestion in theQuestions:\n        anAnswer = input(f\"{aQuestion}? \")\n        if anAnswer.lower() == theAnswer.lower():\n            print(f\"Correct!\")\n            return True\n        else:\n            print(f\"Wrong\")\n            # print(f\"Wrong (hint: LD={ld(anAnswer.lower(), theAnswer.lower())})\")\n    return False",
+        "detail": "worldly.play",
+        "documentation": {}
+    },
+    {
+        "label": "Question",
+        "kind": 6,
+        "importPath": "worldly.questions",
+        "description": "worldly.questions",
+        "peekOfCode": "class Question:\n    dimension: str\n    question: typing.Callable[[str, typing.Any, str], str]\n    group_by: typing.Callable[[typing.Any], typing.Any] = lambda _: _\n    filter_out: typing.Callable[[typing.Any], bool] = None",
+        "detail": "worldly.questions",
+        "documentation": {}
+    },
+    {
+        "label": "Quiz",
+        "kind": 6,
+        "importPath": "worldly.quiz",
+        "description": "worldly.quiz",
+        "peekOfCode": "class Quiz:\n    logger = logging.getLogger(__name__)\n    def __init__(self, dimensions):\n        self._dimensions = {d.name: d for d in dimensions}\n    def __getitem__(self, name):\n        return self._dimensions[name]\n    def __getattr__(self, name):\n        return self._dimensions[name]\n    def country(self, name):\n        try:",
+        "detail": "worldly.quiz",
+        "documentation": {}
+    },
+    {
+        "label": "reload",
+        "kind": 2,
+        "importPath": "repl",
+        "description": "repl",
+        "peekOfCode": "def reload():\n    \"\"\"Reload modules imported after initialization.\"\"\"\n    global _t0_imports, _reloaded_modules\n    if not _t0_imports:\n        print(\"Initial imports not captured yet. Run a cell first.\")\n        return\n    _t1_imports = set(sys.modules.keys())\n    new_imports = _t1_imports - _t0_imports\n    print(f\"Found {len(new_imports)} new imports since initialization.\")\n    # Reload new imports",
+        "detail": "repl",
+        "documentation": {}
+    },
+    {
+        "label": "resize",
+        "kind": 2,
+        "importPath": "repl",
+        "description": "repl",
+        "peekOfCode": "def resize():\n    # pd.set_option(\"display.width\", None)\n    pd.set_option(\"display.width\", os.get_terminal_size().columns)\n    pd.set_option(\"display.max_columns\", None)\n    # pd.set_option(\"display.max_colwidth\", None)\n    pd.set_option(\"display.max_colwidth\", os.get_terminal_size().columns - 32)\n################################################################################\ndef countries():\n    return worldly.dimensions.Dimension.countries\nfrom Levenshtein import distance as ld",
+        "detail": "repl",
+        "documentation": {}
+    },
+    {
+        "label": "countries",
+        "kind": 2,
+        "importPath": "repl",
+        "description": "repl",
+        "peekOfCode": "def countries():\n    return worldly.dimensions.Dimension.countries\nfrom Levenshtein import distance as ld\nimport datadotworld as dw\nimport worldly\nprint(\n    \"\"\"\n# Try and set a reasonable terminal width\nresize()\n# Load modules and look at loaded dimension data",
+        "detail": "repl",
+        "documentation": {}
+    },
+    {
+        "label": "_t0_imports",
+        "kind": 5,
+        "importPath": "repl",
+        "description": "repl",
+        "peekOfCode": "_t0_imports = set()\n_reloaded_modules = set()\ndef _initialize_t0_imports(*args, **kwargs):\n    \"\"\"Capture imports after the first cell is executed.\"\"\"\n    global _t0_imports\n    if not _t0_imports:\n        _t0_imports = set(sys.modules.keys())\n        print(f\"Captured {len(_t0_imports)} initial imports.\")\n_ipy = get_ipython()\nif _ipy:",
+        "detail": "repl",
+        "documentation": {}
+    },
+    {
+        "label": "_reloaded_modules",
+        "kind": 5,
+        "importPath": "repl",
+        "description": "repl",
+        "peekOfCode": "_reloaded_modules = set()\ndef _initialize_t0_imports(*args, **kwargs):\n    \"\"\"Capture imports after the first cell is executed.\"\"\"\n    global _t0_imports\n    if not _t0_imports:\n        _t0_imports = set(sys.modules.keys())\n        print(f\"Captured {len(_t0_imports)} initial imports.\")\n_ipy = get_ipython()\nif _ipy:\n    _ipy.events.register(\"post_run_cell\", _initialize_t0_imports)",
+        "detail": "repl",
+        "documentation": {}
+    },
+    {
+        "label": "_ipy",
+        "kind": 5,
+        "importPath": "repl",
+        "description": "repl",
+        "peekOfCode": "_ipy = get_ipython()\nif _ipy:\n    _ipy.events.register(\"post_run_cell\", _initialize_t0_imports)\ndef reload():\n    \"\"\"Reload modules imported after initialization.\"\"\"\n    global _t0_imports, _reloaded_modules\n    if not _t0_imports:\n        print(\"Initial imports not captured yet. Run a cell first.\")\n        return\n    _t1_imports = set(sys.modules.keys())",
+        "detail": "repl",
+        "documentation": {}
+    },
+    {
+        "label": "q",
+        "kind": 5,
+        "importPath": "repl",
+        "description": "repl",
+        "peekOfCode": "q = quiz_bank()\nq.dimensions       # Review the set of dimensions available\nq.area.group       # View the `area` dimension, numerically grouped (by logarithm)\nq.continent.group  # View the `area` dimension, categorically grouped\n# Merge dimensions\npd.merge(q.government.dataframe, q.continent.dataframe, left_index=True, right_index=True, how=\"inner\")\n# Play a game\nworldly.play.ask(*worldly.play.aRound())\n# Reload modules imported explicitly in the current repl session\nreload()",
+        "detail": "repl",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "worldly",
+        "description": "worldly",
+        "peekOfCode": "def main():\n    # print(\">>>%s<<<\" % recognize_state(\"iran\"))\n    # print(os.environ[\"OPENAI_API_KEY\"])\n    # prompt_template = PromptTemplate(\n    #    input_variables=[\"dimensions\"], template=prompt_template_fmt\n    # )\n    # llm = ChatOpenAI(temperature=0, model=\"gpt-4o\")\n    # llm = ChatOpenAI(temperature=0, model=\"gpt-4o-mini\")\n    # llm = ChatOllama(temperature=0, model=\"llama3\")\n    # llm = ChatOllama(temperature=0, model=\"mistral\")",
+        "detail": "worldly",
+        "documentation": {}
+    }
+]
