@@ -6,7 +6,7 @@ from langchain_core.tools import Tool
 from langchain import agents
 from langchain import hub
 
-from worldly.play import dimensions
+# from worldly.play import dimensions
 
 
 def ask() -> str:
@@ -90,10 +90,5 @@ def ask() -> str:
     print("Agent Result:", result)
 
     # Providing a placeholder input to invoke
-
-    # chain = prompt_template | llm | StrOutputParser()
-    # dimensions = quiz_bank().dimensions
-    # question = chain.invoke(input={"dimensions": dimensions})
-    # return question
 
     return result["output"]

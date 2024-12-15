@@ -182,7 +182,7 @@ def aRound():
     return theQuestions, theAnswer
 
 
-def ask(theQuestions, theAnswer):
+def ask(theQuestions, theAnswer) -> bool:
     for aQuestion in theQuestions:
         anAnswer = input(f"{aQuestion}? ")
         if anAnswer.lower() == theAnswer.lower():
@@ -191,4 +191,5 @@ def ask(theQuestions, theAnswer):
         else:
             print(f"Wrong")
             # print(f"Wrong (hint: LD={ld(anAnswer.lower(), theAnswer.lower())})")
+
     return False

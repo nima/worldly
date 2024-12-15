@@ -1,90 +1,61 @@
 #!/usr/bin/env python
+import json
+
 import colored_traceback
 
-# from dotenv import load_dotenv
-# from langchain_openai import ChatOpenAI
+# pylint: disable=unused-import
+from langchain_openai import ChatOpenAI
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from langchain_community.cache import InMemoryCache
+from langchain import agents
+from langchain import hub
+import langchain
 
-import os
-import sys
-import json
-from agents import quizzy
-import ollama
+import tools.state
 
 colored_traceback.add_hook()
-
-
-def recognize_state(text):
-    messages = [
-        {
-            "role": "user",
-            "content": f"""
-                Given the string '{text}', which country, nation state, or city state is it in reference to?
-
-                Your task is match the given text to the officially recognized name.  Three possibilities arise:
-                1. It's clear what the country/state is, unambiguously, for example "China", or "Russia".
-                2. It's ambiguous, for example "Congo"
-                3. It's invalid, for example "Lilliput" or "Blefuscu"
-
-                Don't return a sentence, such as "The country referred to is the People's Republic of China", but
-                just the answe, i.e., "People's Republic of China".  Also use the official name, for example
-                not "Russia", but "The Russian Federation".
-                  
-                In the second case, return a "?", and in the third case return a "!".
-            """,
-        }
-    ]
-    response = ollama.chat(model="mistral", messages=messages)
-    return response["message"]["content"].strip()
-
-    # messages.append({"role": "assistant", "content": response["message"]["content"]})
-    # messages.append({"role": "user", "content": "And of Germany?"})
-
-    # response = ollama.chat(model="mistral", messages=messages)
-    # print(response["message"]["content"])
-
-
-def sparse_dict(d):
-    """
-    Recursively remove keys with falsy values from a dictionary.
-    """
-    if isinstance(d, dict):
-        return {
-            key: sparse for key, value in d.items() if (sparse := sparse_dict(value))
-        }
-
-    if isinstance(d, list):
-        return [sparse for item in d if (sparse := sparse_dict(item))]
-
-    return d
-
-
-def scrape_linkedin_profile():
-    with open("mocked-linkedin-api-response.json", mode="r", encoding="utf-8") as file:
-        return sparse_dict(json.load(file))
+langchain.cache = InMemoryCache()
 
 
 def main():
-    # print(">>>%s<<<" % recognize_state("iran"))
-    # print(os.environ["OPENAI_API_KEY"])
+    # print(quizzy.ask())
 
-    # prompt_template = PromptTemplate(
-    #    input_variables=["dimensions"], template=prompt_template_fmt
-    # )
+    # Executor
+    llm = ChatOpenAI(temperature=0, model="gpt-4o-mini")
+    toolbox = tools.state.recognizers
+    prompts = {"react": hub.pull("hwchase17/react")}
+    agent_react = agents.create_react_agent(
+        llm=llm, tools=toolbox, prompt=prompts["react"]
+    )
+    _agent_json = agents.create_json_chat_agent(
+        llm=llm, tools=toolbox, prompt=prompts["react"]
+    )
+    executor = agents.AgentExecutor(
+        agent=agent_react, tools=toolbox, format="json", verbose=True
+    )
 
-    # llm = ChatOpenAI(temperature=0, model="gpt-4o")
-    # llm = ChatOpenAI(temperature=0, model="gpt-4o-mini")
-    # llm = ChatOllama(temperature=0, model="llama3")
-    # llm = ChatOllama(temperature=0, model="mistral")
+    while True:
+        user_input = input("What is the country you're thinking of? ")
 
-    # chain = prompt_template | llm | StrOutputParser()
-    # res = chain.invoke(input={"dimensions": dimensions})
-    # print(res)
+        # Use the tool directly, without going via the Executor
+        recognized = tools.state.functions["Ollama:mistral"](user_input)
+        print(recognized)
 
-    print(quizzy.ask())
+        print(tools.state.parse_lm_output.invoke(input={"payload": recognized}))
 
+        # Abstraction: Agent(Tools(Functions))
+        # recognized = tools.state._recognize(user)
+        # recognized = tools.state.recognize.run(user)
+        recognized = executor.invoke(input={"input": user_input})
+        print(recognized)
+
+
+from langchain import hub
+
+prompt = hub.pull("hwchase17/react")
+prompt.template
 
 if __name__ == "__main__":
     main()

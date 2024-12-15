@@ -35,6 +35,7 @@ python-Levenshtein = "*"
 torch = "*"
 tensorflow = "*"
 flax = "*"
+jupyter = "*"
 
 [dev-packages]
 pytest = "*"
@@ -43,3 +44,4 @@ pylint = "*"
 safety = "*"
 pip-audit = "*"
 ipykernel = "*"
+notebook = "*"

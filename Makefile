@@ -1,4 +1,4 @@
-.DEFAULT_GOAL := status
+.DEFAULT_GOAL := usage
 .DEFAULT:
 	@echo "Target '$@' is not defined in this Makefile."
 
@@ -12,11 +12,16 @@ status:
 	pipenv run safety scan
 	pipenv run pip-audit
 	pipenv run pip --disable-pip-version-check list --outdated
+usage:
+	@echo $(MAKE) repl|ipython
+	@echo $(MAKE) upgrade
+	@echo $(MAKE) serve
+	@echo $(MAKE) build|rebuild|purge
 upgrade: rebuild pipenv.upgrade
 	@#$(foreach pkg,$(shell pip --disable-pip-version-check list --outdated --format=json|jq -r 'map(.name)[]'),pipenv run pip install --upgrade ${pkg};)
 	pipenv update
 	pipenv upgrade
-.PHONY: serve build purge rebuild status upgrade
+.PHONY: serve build purge rebuild status usage upgrade
 
 ################################################################################
 # Interactive
