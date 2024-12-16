@@ -3,7 +3,7 @@
 	@echo "Target '$@' is not defined in this Makefile."
 
 serve: ollama.serve
-build: pipenv.build venv
+build: pipenv.build jupyter.build venv
 purge: pipenv.purge
 rebuild: pipenv.clean pipenv.build
 status: PIPAPI_PYTHON_LOCATION := $(shell pipenv --venv)/bin/python
@@ -25,12 +25,19 @@ upgrade: rebuild pipenv.upgrade
 
 ################################################################################
 # Interactive
-repl ipython: PYTHONSTARTUP := repl.py
-repl ipython: venv dw; pipenv run ipython
+repl ipython: export PYTHONSTARTUP := .repl.py
+repl ipython: venv dw .repl.py; pipenv run ipython
 .PHONY: repl ipython
 
 ollama: ollama.run
 .PHONY: ollama
+
+################################################################################
+# Jupyter
+jupyter.build:
+	source .venv/bin/activate && pipenv run python -m ipykernel install --user --name worldly
+jupyter.purge:
+	rm -rf ${HOME}/Library/Jupyter/kernels/worldly
 
 ################################################################################
 # Python Pipenv & VirtualEnv

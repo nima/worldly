@@ -101,7 +101,7 @@ class Dimension:
                     ).astype(int)
                 }
             )
-            .groupby(fn.__name__)
+            .groupby(fn.__name__, observed=True)
             .agg({"index": list})
             .rename(columns={"index": "countries"})
         )
@@ -110,7 +110,7 @@ class Dimension:
         dataframe = self.dataframe[self.name]
         return (
             dataframe.reset_index()
-            .groupby(self.name)
+            .groupby(self.name, observed=True)
             .agg({"index": list})
             .rename(columns={"index": "countries"})
         )

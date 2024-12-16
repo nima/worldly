@@ -2,25 +2,22 @@ import sys
 import os
 
 import importlib
-import autoreload
-from collections import defaultdict
-from IPython import get_ipython
+import autoreload  # type: ignore
+from collections import defaultdict  # type: ignore
+from IPython import get_ipython  # type: ignore
 
-import random
+import random  # type: ignore
 
-import numpy as np
-import scipy as sp
+import numpy as np  # type: ignore
+import scipy as sp  # type: ignore
 import pandas as pd
 
-from operator import mul
-from functools import reduce
+from operator import mul  # type: ignore
+from functools import reduce  # type: ignore
 
 
 ################################################################################
-
-import sys
-import importlib
-from IPython import get_ipython
+# REPL Helpers
 
 _t0_imports = set()
 _reloaded_modules = set()
@@ -80,15 +77,16 @@ def resize():
 
 
 ################################################################################
+# Worldly Helpers
+from Levenshtein import distance as ld  # type: ignore
+import datadotworld as dw  # type: ignore
+import worldly
+from worldly.play import quiz_bank  # type: ignore
 
 
 def countries():
     return worldly.dimensions.Dimension.countries
 
-
-from Levenshtein import distance as ld
-import datadotworld as dw
-import worldly
 
 print(
     """
