@@ -36,8 +36,14 @@ jupyter = "*"
 transformers = "*"
 tensorflow = "*"
 tf-keras = "*"
+# IPython
 ipykernel = "*"
 ipython = "*"
+# Audio & Voice Recognition, requires PyAudio os package
+whisper = "*"
+openai-whisper = "*"
+speechrecognition = "*"
+pyaudio = "*"
 
 [dev-packages]
 pytest = "*"

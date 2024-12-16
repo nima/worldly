@@ -24,6 +24,16 @@ upgrade: rebuild pipenv.upgrade
 .PHONY: serve build purge rebuild status usage upgrade
 
 ################################################################################
+# Brew
+brew.install:
+	brew update
+	brew install portaudio
+brew.upgrade:
+	brew update
+	brew upgrade
+.PHONY: brew.install brew.upgrade
+
+################################################################################
 # Interactive
 repl ipython: export PYTHONSTARTUP := .repl.py
 repl ipython: venv dw .repl.py; pipenv run ipython
